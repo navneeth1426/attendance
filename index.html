@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Attendance Guardian — B.Tech Attendance Tracker</title>
+    <!-- Google Fonts: Poppins & JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="dark-charcoal-bg">
+    <div class="app-wrapper">
+        <!-- Header Section -->
+        <header class="app-header">
+            <div class="header-branding">
+                <div class="logo-icon">🛡️</div>
+                <div>
+                    <h1 class="app-title">Attendance Guardian</h1>
+                    <p class="app-subtitle">B.Tech 75% Compliance System</p>
+                </div>
+            </div>
+            <div class="header-meta">
+                <div class="meta-item">
+                    <span class="meta-label">Current Date</span>
+                    <span id="header-date" class="meta-value font-mono">--</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Live %</span>
+                    <span id="header-pct" class="meta-value font-mono highlight-pct">0.00%</span>
+                </div>
+                <div class="meta-item">
+                    <span class="meta-label">Status</span>
+                    <span id="header-status-badge" class="status-badge font-mono">CRITICAL</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Grid -->
+        <main class="dashboard-grid">
+            <!-- Left Column: Stats & Smart Engine -->
+            <section class="dashboard-left">
+                <!-- Overview Card -->
+                <div class="glass-card primary-stats-card">
+                    <h2>Dashboard Metrics</h2>
+                    <div class="metrics-grid">
+                        <div class="metric-box">
+                            <span class="metric-title">Current Attendance</span>
+                            <span id="stat-current-pct" class="metric-num font-mono">0.00%</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-title">Present Days</span>
+                            <span id="stat-present" class="metric-num font-mono text-green">0</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-title">Absent Days</span>
+                            <span id="stat-absent" class="metric-num font-mono text-crimson">0</span>
+                        </div>
+                        <div class="metric-box">
+                            <span class="metric-title">Working Days Elapsed</span>
+                            <span id="stat-working" class="metric-num font-mono">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Smart Attendance Engine Card -->
+                <div class="glass-card smart-engine-card">
+                    <h2>Smart Attendance Engine</h2>
+                    <div id="smart-engine-content" class="smart-engine-body">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Motivation & Daily Advice -->
+                <div class="glass-card advice-card">
+                    <h2>Guidance & Motivation</h2>
+                    <div class="advice-content">
+                        <div class="advice-block">
+                            <span class="advice-tag">Motivation</span>
+                            <p id="motivation-text" class="advice-msg">Loading motivation...</p>
+                        </div>
+                        <div class="advice-block">
+                            <span class="advice-tag">Today's Advice</span>
+                            <p id="todays-advice-text" class="advice-msg">Loading advice...</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Right Column: Calendar & Statistics -->
+            <section class="dashboard-right">
+                <!-- Calendar View Card -->
+                <div class="glass-card calendar-card">
+                    <div class="calendar-header-controls">
+                        <h2 id="calendar-month-year">Month Year</h2>
+                        <div class="cal-nav-btns">
+                            <button id="prev-month-btn" class="btn-icon" title="Previous Month">◀</button>
+                            <button id="today-month-btn" class="btn-text">Today</button>
+                            <button id="next-month-btn" class="btn-icon" title="Next Month">▶</button>
+                        </div>
+                    </div>
+                    <!-- Legend -->
+                    <div class="calendar-legend">
+                        <span class="legend-item"><span class="dot bg-green"></span>Present</span>
+                        <span class="legend-item"><span class="dot bg-crimson"></span>Absent</span>
+                        <span class="legend-item"><span class="dot bg-blue"></span>Today</span>
+                        <span class="legend-item"><span class="dot bg-yellow"></span>Holiday</span>
+                        <span class="legend-item"><span class="dot bg-grey"></span>Off/Sun/2ndSat</span>
+                        <span class="legend-item"><span class="dot bg-darkgrey"></span>Future</span>
+                    </div>
+                    <!-- Weekdays Row -->
+                    <div class="calendar-weekdays font-mono">
+                        <div>Sun</div><div>Mon</div><div>Tue</div><div>Wed</div><div>Thu</div><div>Fri</div><div>Sat</div>
+                    </div>
+                    <!-- Grid Days -->
+                    <div id="calendar-grid" class="calendar-grid">
+                        <!-- Populated dynamically -->
+                    </div>
+                </div>
+
+                <!-- Statistics & Visual Analytics Card -->
+                <div class="glass-card stats-analytics-card">
+                    <h2>Analytics & Trends</h2>
+                    <div class="analytics-container">
+                        <div class="analytics-row">
+                            <span class="analytics-label">Next Present Impact:</span>
+                            <span id="sim-present-pct" class="font-mono text-green">--</span>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-label">Next Absent Impact:</span>
+                            <span id="sim-absent-pct" class="font-mono text-crimson">--</span>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-label">Semester Start Date:</span>
+                            <span class="font-mono text-light">29 June 2026</span>
+                        </div>
+                        <div class="analytics-row">
+                            <span class="analytics-label">Target Standard:</span>
+                            <span class="font-mono text-amber">75.00% Strict</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="app-footer font-mono">
+            <p>Attendance Guardian &copy; 2026. Built for B.Tech Academic Excellence.</p>
+        </footer>
+    </div>
+
+    <!-- Attendance Modal -->
+    <div id="attendance-modal" class="modal-overlay hidden">
+        <div class="modal-card glass-card">
+            <h3 id="modal-date-title">Mark Attendance</h3>
+            <p id="modal-date-subtitle" class="font-mono text-secondary">Date: --</p>
+            
+            <div class="modal-options">
+                <button type="button" class="attendance-option-btn" data-status="Present">
+                    <span class="opt-icon">✅</span>
+                    <div>
+                        <strong>Present</strong>
+                        <small>Attended working day</small>
+                    </div>
+                </button>
+                <button type="button" class="attendance-option-btn" data-status="Absent">
+                    <span class="opt-icon">❌</span>
+                    <div>
+                        <strong>Absent</strong>
+                        <small>Missed working day</small>
+                    </div>
+                </button>
+                <button type="button" class="attendance-option-btn" data-status="Holiday">
+                    <span class="opt-icon">🏖️</span>
+                    <div>
+                        <strong>Holiday</strong>
+                        <small>Mark as college holiday</small>
+                    </div>
+                </button>
+            </div>
+
+            <div class="modal-actions">
+                <button id="modal-cancel-btn" class="btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="holidays.js"></script>
+    <script src="utils.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
